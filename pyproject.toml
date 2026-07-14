@@ -1,0 +1,44 @@
+[project]
+name = "nukki"
+version = "0.1.0"
+description = "고품질 배경 제거 CLI (BiRefNet 기반, Apple Silicon CoreML 가속)"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "joonwoo" }]
+dependencies = [
+    "rembg[cpu]>=2.0.75",
+    "pillow>=10.0",
+    # pymatting -> numba caps numpy below 2.5; without this pin uv backtracks
+    # numba all the way down to ancient (pre-3.10) releases to satisfy rembg's
+    # numpy>=2.3.0 floor, which then fail to build on current Python.
+    "numpy>=2.3,<2.5",
+]
+
+[project.scripts]
+nukki = "nukki.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/joonwoo/nukki"
+
+[tool.uv]
+environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nukki"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
