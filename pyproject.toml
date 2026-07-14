@@ -19,7 +19,7 @@ dependencies = [
 nukki = "nukki.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/joonwoo/nukki"
+Homepage = "https://github.com/AndyH0ng/nukki"
 
 [tool.uv]
 environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]
